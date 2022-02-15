@@ -1,4 +1,6 @@
 const express = require('express');
+const dotenv = require('dotenv');
+
 const app = new express();
 
 /*This tells the server to use the client 
@@ -12,7 +14,6 @@ app.use(cors_app());
 /*Uncomment the following lines to loan the environment 
 variables that you set up in the .env file*/
 
-const dotenv = require('dotenv');
 dotenv.config();
 
 const api_key = process.env.API_KEY;
@@ -90,7 +91,7 @@ app.get("/url/sentiment", (req, res) => {
     naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(analysisResults => {
             // retrieve data from the jSON response and send back to res
-            return res.send(analysisResults.result.keywords[0].emotion, null, 2);
+            return res.send(analysisResults.result.keywords[0].sentiment, null, 2);
         })
         .catch(err => {
             return res.send("Could not do desired operation " + err);
@@ -149,7 +150,7 @@ app.get("/text/sentiment", (req, res) => {
     // analize data and respond to the request via a callback function when the promise completes
     naturalLanguageUnderstanding.analyze(analyseParams)
         .then(analysisResults => {
-            return res.send(analysisResults.result.keywords[0].emotion, null, 2);
+            return res.send(analysisResults.result.keywords[0].sentiment, null, 2);
         })
         .catch(err => {
             return res.send("Could not do the desired operation " + err);
